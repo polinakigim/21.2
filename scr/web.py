@@ -1,7 +1,7 @@
 # Импорт встроенной библиотеки для работы веб-сервера 11
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import time
-
+import os
 # Для начала определим настройки запуска
 hostName = "localhost"  # Адрес для доступа по сети
 serverPort = 8080  # Порт для доступа по сети
@@ -16,12 +16,12 @@ class MyServer(BaseHTTPRequestHandler):
     def do_GET(self):
         """ Метод для обработки входящих GET-запросов """
 
-        path = self.get_path()
-        print(path)
+
+
         self.send_response(200)  # Отправка кода ответа
         self.send_header("Content-type", "text/html")  # Отправка типа данных, который будет передаваться
         self.end_headers()  # Завершение формирования заголовков ответа
-        with open("html/contacts.html", "r", encoding="utf-8") as file:
+        with open("../html/contacts.html", "r", encoding="utf-8") as file:
             content = file.read()
             self.wfile.write(bytes(content, "utf-8"))  # Тело ответа
 
@@ -33,12 +33,6 @@ class MyServer(BaseHTTPRequestHandler):
         print(response)
         self.send_response(200)
         self.end_headers()
-
-
-    def get_path(self) -> str:
-        if self.path == "/":
-            return "contact.html"
-        return self.path[1:]
 
 
 if __name__ == "__main__":
