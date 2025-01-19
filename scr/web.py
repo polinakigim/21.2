@@ -16,22 +16,12 @@ class MyServer(BaseHTTPRequestHandler):
     def do_GET(self):
         """ Метод для обработки входящих GET-запросов """
 
-        path = self.path
-
-        if path == "/css/bootstrap.min.css":
-            path = "../css/bootstrap.min.css"
-            type_header = "text/css"
-        elif path == "/js/bootstrap.bundle.min.js":
-            path = "../js/bootstrap.bundle.min.js"
-            type_header = "text/javascript"
-        else:
-            path = "../html/contacts.html"
-            type_header = "text/html"
-
+        path = self.get_path()
+        print(path)
         self.send_response(200)  # Отправка кода ответа
         self.send_header("Content-type", "text/html")  # Отправка типа данных, который будет передаваться
         self.end_headers()  # Завершение формирования заголовков ответа
-        with open(path) as file:
+        with open("html/contacts.html", "r", encoding="utf-8") as file:
             content = file.read()
             self.wfile.write(bytes(content, "utf-8"))  # Тело ответа
 
@@ -43,6 +33,12 @@ class MyServer(BaseHTTPRequestHandler):
         print(response)
         self.send_response(200)
         self.end_headers()
+
+
+    def get_path(self) -> str:
+        if self.path == "/":
+            return "contact.html"
+        return self.path[1:]
 
 
 if __name__ == "__main__":
