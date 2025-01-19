@@ -1,4 +1,4 @@
-# Импорт встроенной библиотеки для работы веб-сервера
+# Импорт встроенной библиотеки для работы веб-сервера 11
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import time
 
